@@ -10,12 +10,13 @@ const AuthContext = createContext<Auth>({
   user: { username: "", authorized: false },
   login: () => {},
   logout: () => {},
+  setUser: () => {},
 });
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoaded, setisLoaded] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(true)
   const [user, setUser] = useState<User>({
     username: "",
     authorized: false,
@@ -30,20 +31,28 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
     if (ls) {
       setUser(ls.user);
       setIsAuthenticated(ls.isAuthenticated);
-      setisLoaded(true);
+      console.log("executed1")
     }
-    else {
-      router.push("/auth");
-    }
-  }, []);
+  }, [router]);
 
-  if (!isLoaded) {
+  useEffect(() => {
+    if (!isAuthenticated && !user?.authorized && user?.username === "") {
+      console.log("executed2")
+      router.push("/auth");
+    } 
+    setIsRedirecting(false)
+  }, [router, isAuthenticated, user]);
+
+  if (isRedirecting) {
     return <MyLoading message="Redirecting..." />;
   }
 
   // if (!isAuthenticated && isLoaded && !user) {
   //   router.push("/auth");
   // }
+
+  console.log(isAuthenticated)
+  console.log(user)
 
   return (
     <AuthContext.Provider
@@ -52,9 +61,10 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
         isAuthenticated,
         login,
         logout,
+        setUser,
       }}
     >
-      {isLoaded && props.children}
+      {!isRedirecting && props.children}
     </AuthContext.Provider>
   );
 };

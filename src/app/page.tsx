@@ -1,17 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import MyLoading from "@/_components/atoms/my-loading";
 import CardListPokemon from "@/_components/molecules/card-list-pokemon";
 import PageLayout from "@/_components/organism/page-layout";
-import { useAuth } from "@/_hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import getAllPokemon from "@/_libs/fetcher/getPokemon";
 import { PokemonList } from "@/_libs/types";
+import { useAuth } from "./_hooks/useAuth";
 
 export default function Home() {
-  // const router = useRouter();
-
+  const {user,isAuthenticated} = useAuth()
   const { data, isLoading } = useQuery<PokemonList>({
     queryKey: ["allPokemon"],
     queryFn: async () =>
@@ -24,11 +23,10 @@ export default function Home() {
       }),
   });
 
-  const { isAuthenticated } = useAuth();
-
-  if (!isAuthenticated) {
-    return <MyLoading message="Loading..." />;
+  if (!user?.authorized && !isAuthenticated) {
+    return <MyLoading message="Checking Authentication..."/> 
   }
+  
 
   return (
     <div className="h-screen w-screen">

@@ -17,26 +17,24 @@ const Auth: React.FC = () => {
     formState: { errors },
   } = useForm<LoginType>();
 
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, setUser } = useAuth();
 
   const onSubmit: SubmitHandler<LoginType> = (data) => {
     if (data.username === "admin" && data.password === "admin") {
       localStorage.setItem(
         "auth",
-        JSON.stringify({ user: data, isAuthenticated: true })
+        JSON.stringify({
+          user: { username: data.username, authorized: true },
+          isAuthenticated: true,
+        })
       );
+      setUser({ username: data.username, authorized: true });
       login();
       router.push("/");
     } else {
       alert("Username atau Password salah");
     }
   };
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/");
-    }
-  }, [isAuthenticated]);
 
   if (isAuthenticated) {
     return <MyLoading message="Checking Authentication..." />;
@@ -50,8 +48,7 @@ const Auth: React.FC = () => {
       <Card>
         {/* brand */}
         <div className="w-1/2 flex flex-col justify-center items-center border-r p-8">
-
-        <div className="flex w-full justify-center items-center">
+          <div className="flex w-full justify-center items-center">
             <h1 className="text-2xl text-white font-semibold">Welcome To</h1>
           </div>
           <div className="flex w-full justify-center items-center">

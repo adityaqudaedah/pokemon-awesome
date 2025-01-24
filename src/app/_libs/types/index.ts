@@ -1,3 +1,5 @@
+import React from "react";
+
 export type User = {
   username: string;
   authorized: boolean;
@@ -13,6 +15,7 @@ export type Auth = {
   login: () => void;
   logout: () => void;
   user: User;
+  setUser : React.Dispatch<React.SetStateAction<User>>
 };
 
 export type LoginType = {
