@@ -10,7 +10,7 @@ import { PokemonList } from "@/_libs/types";
 import { useAuth } from "./_hooks/useAuth";
 
 export default function Home() {
-  const {user,isAuthenticated} = useAuth()
+  const {isAuthenticated} = useAuth()
   const { data, isLoading } = useQuery<PokemonList>({
     queryKey: ["allPokemon"],
     queryFn: async () =>
@@ -23,10 +23,9 @@ export default function Home() {
       }),
   });
 
-  if (!user?.authorized && !isAuthenticated) {
-    return <MyLoading message="Checking Authentication..."/> 
+  if (!isAuthenticated) {
+    return  <MyLoading message="Checking Authentication..." />
   }
-  
 
   return (
     <div className="h-screen w-screen">

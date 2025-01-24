@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { LoginType } from "@/_libs/types";
 import { useAuth } from "@/_hooks/useAuth";
 import { useRouter } from "next/navigation";
-import MyLoading from "@/_components/atoms/my-loading";
+// import MyLoading from "@/_components/atoms/my-loading";
 
 const Auth: React.FC = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ const Auth: React.FC = () => {
     formState: { errors },
   } = useForm<LoginType>();
 
-  const { login, isAuthenticated, setUser } = useAuth();
+  const { login, setUser } = useAuth();
 
   const onSubmit: SubmitHandler<LoginType> = (data) => {
     if (data.username === "admin" && data.password === "admin") {
@@ -30,15 +30,15 @@ const Auth: React.FC = () => {
       );
       setUser({ username: data.username, authorized: true });
       login();
-      router.push("/");
+      router.replace("/");
     } else {
       alert("Username atau Password salah");
     }
   };
 
-  if (isAuthenticated) {
-    return <MyLoading message="Checking Authentication..." />;
-  }
+  // if (isAuthenticated) {
+  //   return <MyLoading message="Checking Authentication..." />;
+  // }
 
   return (
     <form

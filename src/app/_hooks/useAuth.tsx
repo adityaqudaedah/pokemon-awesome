@@ -16,7 +16,7 @@ const AuthContext = createContext<Auth>({
 const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isRedirecting, setIsRedirecting] = useState(true)
+  const [isRedirecting, setIsRedirecting] = useState(true);
   const [user, setUser] = useState<User>({
     username: "",
     authorized: false,
@@ -26,22 +26,17 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const logout = () => setIsAuthenticated(false);
 
   useEffect(() => {
+    
     const auth = localStorage.getItem("auth");
     const ls = JSON.parse(auth || "{}") || null;
-    if (ls) {
+    if (Object.keys(ls).length > 0) {
       setUser(ls.user);
       setIsAuthenticated(ls.isAuthenticated);
-      console.log("executed1")
+    } else {
+      router.replace("/auth");
     }
+    setIsRedirecting(false);
   }, [router]);
-
-  useEffect(() => {
-    if (!isAuthenticated && !user?.authorized && user?.username === "") {
-      console.log("executed2")
-      router.push("/auth");
-    } 
-    setIsRedirecting(false)
-  }, [router, isAuthenticated, user]);
 
   if (isRedirecting) {
     return <MyLoading message="Redirecting..." />;

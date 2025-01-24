@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation";
 import React from "react";
 
 const Avatar = () => {
-  const router = useRouter()
+  const router = useRouter();
   const { user, logout, setUser } = useAuth();
   const handleClick = () => {
-    router.push("/auth")
+    router.replace("/auth");
     logout();
     localStorage.clear();
     setUser({ username: "", authorized: false });
