@@ -27,7 +27,7 @@ export default function Home() {
   const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
-    return <MyLoading message="Waiting Authentication..." />;
+    return <MyLoading message="Loading..." />;
   }
 
   return (
