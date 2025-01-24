@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import MyLoading from "@/_components/atoms/my-loading";
 import CardListPokemon from "@/_components/molecules/card-list-pokemon";
 import PageLayout from "@/_components/organism/page-layout";
