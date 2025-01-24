@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "@/_components/molecules/login-card";
 import Input from "@/_components/atoms/Input";
 import Button from "@/_components/atoms/button";
@@ -27,12 +27,17 @@ const Auth: React.FC = () => {
       );
       login();
       router.push("/");
+    } else {
+      alert("Username atau Password salah");
     }
   };
 
-  if (isAuthenticated) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/");
+    }
+  }, [isAuthenticated]);
+
   if (isAuthenticated) {
     return <MyLoading message="Checking Authentication..." />;
   }
@@ -40,15 +45,22 @@ const Auth: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex justify-center items-center h-screen"
+      className="flex justify-center items-center h-screen max-w-full"
     >
       <Card>
         {/* brand */}
         <div className="w-1/2 flex flex-col justify-center items-center border-r p-8">
-          <h1 className="text-2xl text-white font-semibold">Welocme To</h1>
-          <h1 className="text-2xl text-white font-semibold">
-            Pokemon Awesome ✨
-          </h1>
+
+        <div className="flex w-full justify-center items-center">
+            <h1 className="text-2xl text-white font-semibold">Welcome To</h1>
+          </div>
+          <div className="flex w-full justify-center items-center">
+            <h1 className="text-2xl text-white font-semibold">Pokemon</h1>
+          </div>
+          <div className="flex w-full justify-center items-center">
+            <h1 className="text-2xl text-white font-semibold">Awesome</h1>
+            <span className="text-sml">✨</span>
+          </div>
         </div>
 
         {/* form-input */}
