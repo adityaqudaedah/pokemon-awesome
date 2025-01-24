@@ -47,13 +47,6 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = (props) => {
     return <MyLoading message="Redirecting..." />;
   }
 
-  // if (!isAuthenticated && isLoaded && !user) {
-  //   router.push("/auth");
-  // }
-
-  console.log(isAuthenticated)
-  console.log(user)
-
   return (
     <AuthContext.Provider
       value={{

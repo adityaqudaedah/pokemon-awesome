@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import Card from "@/_components/molecules/login-card";
 import Input from "@/_components/atoms/Input";
 import Button from "@/_components/atoms/button";
