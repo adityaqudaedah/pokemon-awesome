@@ -4,7 +4,7 @@ const Card: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <div className="flex max-w-1/2 rounded-lg shadow-lg overflow-auto bg-main-darken p-8">
+    <div className="flex max-w-1/2 max-h-80 rounded-lg shadow-lg overflow-auto bg-main-darken p-8">
       {children}
     </div>
   );
